@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{head.html:: head}">
+    <title>Grids & Circles</title>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Grid & Circles</h1>
+    <h2>Production Management</h2>
+
+    <form action="@{/products}" method="post">
+        <div class="mb-3">
+            <label for="productName" class="form-label">name</label>
+            <input type="text" clas="form-control" id="productName" name="productName" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-select">
+                <option selected>Open this select Menu</option>
+                <option value="COFFEE_BEAN_PACKAGE">COFFE_BEAN_PACKAGE</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price">
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" cols="30" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+</body>
+</html>

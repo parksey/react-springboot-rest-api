@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{head.html:: head}">
+    <title>Grids & Circles</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>Grid & Circles</h1>
+        <h2>Production Management</h2>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a th:href="@{/new-product}" class="btn btn-primary me-md 2" type="button">Add Product</a>
+        </div>
+
+        <table class="table table-hover table-striped">
+            <thead>
+            <tr>
+                <th>Product id  </th>
+                <th>Product name</th>
+                <th>Category    </th>
+                <th>Price       </th>
+                <th>Description </th>           1
+                <th>Create at   </th>
+                <th>Update at   </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product: ${products}" th:object="${product}">
+                <td th:text="*{productId}"></td>
+                <td th:text="*{productName}"></td>
+                <td th:text="*{category}"></td>
+                <td th:text="*{price}"></td>
+                <td th:text="*{description}"></td>           1
+                <td th:text="*{createAt}"></td>
+                <td th:text="*{updateAt}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
