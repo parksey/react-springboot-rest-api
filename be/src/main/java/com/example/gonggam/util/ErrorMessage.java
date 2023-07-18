@@ -17,7 +17,7 @@ public final class ErrorMessage {
 
         public static final String NO_DATA = "값이 안들어 왔습니다.";
         public static final String NOT_BLANK = "빈 값이면 안됩니다.";
-        public static final String UNDER_MIN_CAPACIRY = "최소 인원은 {value}명입니다.";
+        public static final String UNDER_MIN_CAPACIRY = "최소 인원은 {0}명입니다.";
 
         private Space() {
             throw new UtilsException(Global.UTIL_CLASS);

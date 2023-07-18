@@ -1,6 +1,7 @@
 package com.example.gonggam.space.dto;
 
 import com.example.gonggam.util.ErrorMessage;
+import com.example.gonggam.util.UtilsCode;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -66,14 +67,20 @@ class SpaceRequestTest {
         LocalDate endAt = LocalDate.now().plusDays(2);
 
         // When
-        SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder().build();
+        SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
+                .build();
 
         Set<ConstraintViolation<SpaceCreateRequest>> validates = validator.validate(spaceCreateRequest);
 
 
         assertThat(validates).isNotEmpty();
-        validates.forEach(
-                validate -> assertThat(validate.getMessageTemplate()).isEqualTo(ErrorMessage.Space.NOT_BLANK)
+        validates.forEach( validate -> {
+                if (validate.getPropertyPath().toString().equals("capacity")) {
+                    assertThat(validate.getMessageTemplate()).isEqualTo(String.format(ErrorMessage.Space.UNDER_MIN_CAPACIRY, UtilsCode.Space.MIN_SPACE_CAPACITY));
+                    return;
+                }
+                assertThat(validate.getMessageTemplate()).containsAnyOf(ErrorMessage.Space.NO_DATA, ErrorMessage.Space.NOT_BLANK);
+            }
         );
     }
 }
