@@ -1,19 +1,28 @@
 package com.example.gonggam.space;
 
 import com.example.gonggam.space.domain.SharedSpace;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import com.example.gonggam.space.exception.SharedSpaceException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Space Entity 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class SharedSpaceTest {
+class SharedSpaceTest {
+    private static Validator validator;
+
+    @BeforeAll
+    static void init() {
+        validator = Validation.buildDefaultValidatorFactory().getValidator();
+    }
 
     @Test
     void 공유공간_생성_테스트() {
@@ -43,8 +52,15 @@ public class SharedSpaceTest {
         LocalDateTime endAt = LocalDateTime.now().plusDays(7);
 
         // When + Then
-        assertThatThrownBy(()-> new SharedSpace(title, description, location, capacity, startAt, endAt))
-                .isInstanceOf(SpaceException.class)
+        assertThatThrownBy(()-> SharedSpace.builder()
+                .title(title)
+                .description(description)
+                .location(location)
+                .capacity(capacity)
+                .startAt(startAt)
+                .endAt(endAt)
+                .build())
+                .isInstanceOf(SharedSpaceException.class)
                 .hasMessage("시작일자와 종료일자가 잘못되었습니다.");
     }
 
@@ -55,12 +71,23 @@ public class SharedSpaceTest {
         String description = "description";
         String location = "서울특별시 강남구 테헤란로 420";
         int capacity = -1;
-        LocalDateTime startAt = LocalDateTime.now().plusDays(28);
-        LocalDateTime endAt = LocalDateTime.now().plusDays(7);
+        LocalDateTime startAt = LocalDateTime.now().plusDays(7);
+        LocalDateTime endAt = LocalDateTime.now().plusDays(28);
 
-        // When + Then
-        assertThatThrownBy(()-> new SharedSpace(title, description, location, capacity, startAt, endAt))
-                .isInstanceOf(SpaceException.class)
-                .hasMessage("총원이 잘못되었습니다.");
+        SharedSpace sharedSpace = SharedSpace.builder()
+                .title(title)
+                .description(description)
+                .location(location)
+                .capacity(capacity)
+                .startAt(startAt)
+                .endAt(endAt)
+                .build();
+
+        // When
+        Set<ConstraintViolation<SharedSpace>> spaceViolations = validator.validate(sharedSpace);
+
+        // Then
+        assertThat(spaceViolations).isNotEmpty();
+        spaceViolations.forEach(violation -> assertThat(violation.getMessage()).isEqualTo("최소 인원은 1명입니다."));
     }
 }

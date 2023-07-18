@@ -1,7 +1,11 @@
 package com.example.gonggam.space.domain;
 
+import com.example.gonggam.space.exception.SharedSpaceException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
@@ -12,28 +16,32 @@ public class SharedSpace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spaceId;
 
-    @NotNull
-    @Column(length = 50)
+    @Size(max = 50, message = "입력이 너무 길어요.")
+    @NotNull(message = "값이 안들어 왔습니다.")
     private String title;
 
     private String description;
 
-    @Column(nullable = false)
+    @Size(max = 100, message = "입력이 너무 길어요.")
+    @NotNull(message = "값이 안들어 왔습니다.")
     private String location;
 
+
+    @Min(value = 1, message = "최소 인원은 {value}명입니다.")
     private int capacity;
 
-    @Column(nullable = false)
+    @NotNull(message = "값이 안들어 왔습니다.")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime startAt;
 
-    @Column(nullable = false)
+    @NotNull(message = "값이 안들어 왔습니다.")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime endAt;
 
 
-    public SharedSpace(Long spaceId, String title, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
-        this.spaceId = spaceId;
+    @Builder
+    public SharedSpace(String title, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
+        validateTime(startAt, endAt);
         this.title = title;
         this.description = description;
         this.location = location;
@@ -42,11 +50,12 @@ public class SharedSpace {
         this.endAt = endAt;
     }
 
-    public SharedSpace(String title, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
-        this(null, title, description, location, capacity, startAt, endAt);
+    protected SharedSpace() {
     }
 
-    public SharedSpace() {
-
+    private void validateTime(LocalDateTime startAt, LocalDateTime endAt) {
+        if (startAt.isAfter(endAt)) {
+            throw new SharedSpaceException("시작일자와 종료일자가 잘못되었습니다.");
+        }
     }
 }
