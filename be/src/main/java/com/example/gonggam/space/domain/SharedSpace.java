@@ -16,18 +16,18 @@ public class SharedSpace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spaceId;
 
-    @Size(max = 50, message = "입력이 너무 길어요.")
-    @NotNull(message = "값이 안들어 왔습니다.")
+    @Size(max = 50, message = "{error.global.LONG-INPUT}")
+    @NotNull(message = "error.global.NO-DATA")
     private String title;
 
     private String description;
 
-    @Size(max = 100, message = "입력이 너무 길어요.")
+    @Size(max = 100, message = "{error.global.LONG-INPUT}")
     @NotNull(message = "값이 안들어 왔습니다.")
     private String location;
 
 
-    @Min(value = 1, message = "최소 인원은 {value}명입니다.")
+    @Min(value = 1, message = "{error.global.UNDER-MIN}")
     private int capacity;
 
     @NotNull(message = "값이 안들어 왔습니다.")

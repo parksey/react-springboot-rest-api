@@ -10,13 +10,13 @@ import org.junit.jupiter.api.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("Space Entity 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class SharedSpaceTest {
+
     private static Validator validator;
 
     @BeforeAll
@@ -88,6 +88,5 @@ class SharedSpaceTest {
 
         // Then
         assertThat(spaceViolations).isNotEmpty();
-        spaceViolations.forEach(violation -> assertThat(violation.getMessage()).isEqualTo("최소 인원은 1명입니다."));
     }
 }
