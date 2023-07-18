@@ -16,6 +16,10 @@ public class SharedSpace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spaceId;
 
+    @NotNull
+    @Column(unique = true)
+    private String email;
+
     @Size(max = 50, message = "{error.global.LONG-INPUT}")
     @NotNull(message = "error.global.NO-DATA")
     private String title;
@@ -40,8 +44,9 @@ public class SharedSpace {
 
 
     @Builder
-    public SharedSpace(String title, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
+    public SharedSpace(String title, String email, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
         validateTime(startAt, endAt);
+        this.email = email;
         this.title = title;
         this.description = description;
         this.location = location;

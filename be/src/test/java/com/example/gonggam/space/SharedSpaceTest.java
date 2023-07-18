@@ -27,6 +27,7 @@ class SharedSpaceTest {
     @Test
     void 공유공간_생성_테스트() {
         // Given
+        String email = "email";
         String title = "title";
         String description = "description";
         String location = "서울특별시 강남구 테헤란로 420";
