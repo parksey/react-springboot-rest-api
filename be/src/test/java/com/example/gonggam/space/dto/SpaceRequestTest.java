@@ -7,14 +7,15 @@ import jakarta.validation.Validator;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("Space 요청 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-public class SpaceRequestTest {
+class SpaceRequestTest {
 
     private static Validator validator;
 
@@ -30,8 +31,8 @@ public class SpaceRequestTest {
         String title = "타이틀";
         String location = "위치";
         int capacity = 8;
-        LocalDate startAt = LocalDate.now();
-        LocalDate endAt = LocalDate.now().plusDays(2);
+        LocalDateTime startAt = LocalDateTime.now();
+        LocalDateTime endAt = LocalDateTime.now().plusDays(2);
 
         // When
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()

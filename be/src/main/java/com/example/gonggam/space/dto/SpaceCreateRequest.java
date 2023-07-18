@@ -4,8 +4,10 @@ import com.example.gonggam.util.ErrorMessage;
 import com.example.gonggam.util.UtilsCode;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -26,10 +28,12 @@ public class SpaceCreateRequest {
     @Min(value = UtilsCode.Space.MIN_SPACE_CAPACITY, message = ErrorMessage.Space.UNDER_MIN_CAPACIRY)
     private final int capacity;
 
-    @NotBlank(message = ErrorMessage.Space.NOT_BLANK)
+    @DateTimeFormat(pattern = UtilsCode.Space.DATE_FORMAT)
+    @NotNull(message = ErrorMessage.Space.NO_DATA)
     private final LocalDateTime startAt;
 
-    @NotBlank(message = ErrorMessage.Space.NOT_BLANK)
+    @DateTimeFormat(pattern = UtilsCode.Space.DATE_FORMAT)
+    @NotNull(message = ErrorMessage.Space.NO_DATA)
     private final LocalDateTime endAt;
 
     @Builder
