@@ -27,7 +27,7 @@ public class SharedSpace {
     private String location;
 
 
-    @Min(value = 1, message = "{error.global.UNDER-MIN}")
+    @Min(value = 0, message = "{error.global.UNDER-MIN}")
     private int capacity;
 
     @NotNull(message = "값이 안들어 왔습니다.")
