@@ -8,9 +8,7 @@ import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.owner.service.OwnerMapper;
 import com.example.gonggam.owner.service.OwnerService;
 import com.example.gonggam.util.exception.CustomValidationStatus;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,6 +24,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @DisplayName("OwnerService 테스트")
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ExtendWith(MockitoExtension.class)
 class OwnerServiceTest {
 
