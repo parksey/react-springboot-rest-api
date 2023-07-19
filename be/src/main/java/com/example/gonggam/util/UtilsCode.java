@@ -1,6 +1,8 @@
 package com.example.gonggam.util;
 
+import com.example.gonggam.util.exception.CustomValidationStatus;
 import com.example.gonggam.util.exception.UtilsException;
+import com.example.gonggam.util.exception.ValidationStatus;
 
 public class UtilsCode {
 
@@ -11,7 +13,7 @@ public class UtilsCode {
 
 
         private Global() {
-            throw new UtilsException(ErrorMessage.Global.UTIL_CLASS);
+            throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
         }
     }
 
@@ -21,11 +23,11 @@ public class UtilsCode {
         public static final String DATE_FORMAT = "yyyy-MM-dd HH:MM";
 
         private Space() {
-            throw new UtilsException(ErrorMessage.Global.UTIL_CLASS);
+            throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
         }
     }
 
     private UtilsCode() {
-        throw new UtilsException(ErrorMessage.Global.UTIL_CLASS);
+        throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.gonggam.owner;
 
 import com.example.gonggam.owner.domain.Owner;
-import com.example.gonggam.util.ErrorMessage;
+import com.example.gonggam.util.exception.ValidationStatus;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -83,7 +83,7 @@ class OwnerTest {
         // Then
         assertThat(validates).isNotNull();
         validates.forEach(
-                validate -> assertThat(validate.getMessage()).isEqualTo(ErrorMessage.Global.NOT_EMAIL)
+                validate -> assertThat(validate.getMessage()).isEqualTo(ValidationStatus.Global.NOT_EMAIL)
         );
     }
 
@@ -113,7 +113,7 @@ class OwnerTest {
         // Then
         assertThat(validates).isNotNull();
         validates.forEach(
-                validate -> assertThat(validate.getMessage()).isEqualTo(ErrorMessage.Global.NOT_PHONE_PATTERN)
+                validate -> assertThat(validate.getMessage()).isEqualTo(ValidationStatus.Global.NOT_PHONE_PATTERN)
         );
     }
 }
