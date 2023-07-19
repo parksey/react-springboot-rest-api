@@ -4,6 +4,17 @@ import com.example.gonggam.util.exception.UtilsException;
 
 public class UtilsCode {
 
+    public static final class Global {
+
+        public static final String PHONE_PATTERN = "\\d{10,11}";
+        public static final String EMAIL_PATTERN = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}";
+
+
+        private Global() {
+            throw new UtilsException(ErrorMessage.Global.UTIL_CLASS);
+        }
+    }
+
     public static final class Space {
 
         public static final int MIN_SPACE_CAPACITY = 1;
