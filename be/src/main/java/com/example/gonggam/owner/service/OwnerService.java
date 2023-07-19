@@ -31,4 +31,13 @@ public class OwnerService {
 
         return ownerMapper.toResponse(savedOwner);
     }
+
+    public void updateOperator(OwnerRequest ownerRequest) {
+        Owner existsOwner = ownerRepository.findByOwnerNo(ownerRequest.getOwnerNo())
+                .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
+
+        Owner owner = ownerMapper.toEntity(ownerRequest);
+        existsOwner.update(owner);
+        ownerRepository.save(existsOwner);
+    }
 }

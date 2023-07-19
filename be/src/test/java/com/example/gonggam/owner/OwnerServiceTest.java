@@ -16,12 +16,15 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @DisplayName("OwnerService 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -71,7 +74,7 @@ class OwnerServiceTest {
                 .phone(owner.getPhone())
                 .build();
 
-        OwnerResponse ownerResponse = OwnerResponse.builder()
+        OwnerResponse expectResponse = OwnerResponse.builder()
                 .email(owner.getEmail())
                 .phone(owner.getPhone())
                 .ownerNo(owner.getOwnerNo())
@@ -80,7 +83,7 @@ class OwnerServiceTest {
         given(ownerRepository.existsByOwnerNo(owner.getOwnerNo())).willReturn(false);
         given(ownerMapper.toEntity(ownerRequest)).willReturn(owner);
         given(ownerRepository.save(owner)).willReturn(expectOwner);
-        given(ownerMapper.toResponse(expectOwner)).willReturn(ownerResponse);
+        given(ownerMapper.toResponse(expectOwner)).willReturn(expectResponse);
 
         // When
         final OwnerResponse savedOwner = ownerService.createOperator(ownerRequest);
@@ -115,4 +118,44 @@ class OwnerServiceTest {
                 .isInstanceOf(OwnerException.class)
                 .hasMessage(CustomValidationStatus.EXIST_OWNER.getMessage());
     }
+
+    @Test
+    void 사업자_정보_업데이트_성공_테스트() {
+        // Given
+        String newEmail = "new@naver.com";
+        String newPhone = "01099999999";
+
+        OwnerRequest ownerRequest = OwnerRequest.builder()
+                .ownerNo(owner.getOwnerNo())
+                .email(newEmail)
+                .phone(newPhone)
+                .build();
+
+        Owner updateOwner = Owner.builder()
+                .ownerNo(owner.getOwnerNo())
+                .email(newEmail)
+                .phone(newPhone)
+                .build();
+
+        OwnerResponse expectResponse = OwnerResponse.builder()
+                .ownerNo(owner.getOwnerNo())
+                .email(newEmail)
+                .phone(newPhone)
+                .build();
+
+        given(ownerRepository.findByOwnerNo(ownerRequest.getOwnerNo())).willReturn(Optional.of(owner));
+
+        // When
+        owner.update(updateOwner);
+        ownerService.updateOperator(ownerRequest);
+
+        // When + then
+        verify(ownerRepository).findByOwnerNo(ownerRequest.getOwnerNo());
+
+        assertAll(
+                () ->  assertThat(owner.getEmail()).isEqualTo(newEmail),
+                () -> assertThat(owner.getPhone()).isEqualTo(newPhone)
+        );
+    }
+
 }

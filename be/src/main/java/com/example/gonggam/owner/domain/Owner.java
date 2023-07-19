@@ -52,4 +52,9 @@ public class Owner {
 
     protected Owner() {
     }
+
+    public void update(Owner owner) {
+        email = owner.email;
+        phone = owner.phone;
+    }
 }
