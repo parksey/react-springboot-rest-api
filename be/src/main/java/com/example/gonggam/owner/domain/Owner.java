@@ -1,7 +1,7 @@
 package com.example.gonggam.owner.domain;
 
-import com.example.gonggam.util.exception.ValidationStatus;
 import com.example.gonggam.util.UtilsCode;
+import com.example.gonggam.util.exception.ValidationStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
