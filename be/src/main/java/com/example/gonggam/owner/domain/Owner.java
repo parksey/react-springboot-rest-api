@@ -2,10 +2,7 @@ package com.example.gonggam.owner.domain;
 
 import com.example.gonggam.util.UtilsCode;
 import com.example.gonggam.util.exception.ValidationStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +29,7 @@ public class Owner {
 
     @Email(regexp = UtilsCode.Global.EMAIL_PATTERN,message = ValidationStatus.Global.NOT_EMAIL)
     @NotNull
+    @Column(unique = true)
     private String email;
 
     @NotNull(message = ValidationStatus.Global.NO_DATA)

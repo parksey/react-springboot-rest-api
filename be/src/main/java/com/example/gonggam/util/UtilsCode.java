@@ -20,7 +20,8 @@ public class UtilsCode {
     public static final class Space {
 
         public static final int MIN_SPACE_CAPACITY = 1;
-        public static final String DATE_FORMAT = "yyyy-MM-dd HH:MM";
+        public static final int MIN_MONEY = 1;
+        public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
         private Space() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
