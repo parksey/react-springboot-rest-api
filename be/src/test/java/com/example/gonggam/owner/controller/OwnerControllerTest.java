@@ -1,7 +1,7 @@
 package com.example.gonggam.owner.controller;
 
 import com.example.gonggam.GonggamApplication;
-import com.example.gonggam.owner.dto.OwnerRequest;
+import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -44,7 +44,7 @@ class OwnerControllerTest {
         String ownerNo = "1234567890";
         String email = "psy@naver.com";
 
-        OwnerRequest ownerRequest = OwnerRequest.builder()
+        OwnerUpdateRequest ownerRequest = OwnerUpdateRequest.builder()
                 .phone(phone)
                 .ownerNo(ownerNo)
                 .email(email)

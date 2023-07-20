@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class OwnerRequest {
+public class OwnerUpdateRequest {
 
     @NotBlank(message = ValidationStatus.Global.NO_DATA)
     private String ownerNo;
@@ -24,7 +24,7 @@ public class OwnerRequest {
     private String email;
 
     @Builder
-    public OwnerRequest(final String ownerNo, final String phone, final String email) {
+    public OwnerUpdateRequest(final String ownerNo, final String phone, final String email) {
         this.ownerNo = ownerNo;
         this.phone = phone;
         this.email = email;

@@ -28,14 +28,14 @@ class OwnerRequestTest {
         String phone = "01012345678";
         String email = "psy@naver.com";
 
-        OwnerRequest ownerRequest =OwnerRequest.builder()
+        OwnerUpdateRequest ownerRequest = OwnerUpdateRequest.builder()
                 .ownerNo(ownerNo)
                 .phone(phone)
                 .email(email)
                 .build();
 
         // When
-        Set<ConstraintViolation<OwnerRequest>> validates = validator.validate(ownerRequest);
+        Set<ConstraintViolation<OwnerUpdateRequest>> validates = validator.validate(ownerRequest);
 
         // Then
         assertThat(validates).isNotNull();
@@ -49,10 +49,10 @@ class OwnerRequestTest {
     @Test
     void 사업자_생성_요청_실패_테스트() {
         // Given
-        OwnerRequest ownerRequest =OwnerRequest.builder().build();
+        OwnerUpdateRequest ownerRequest = OwnerUpdateRequest.builder().build();
 
         // When
-        Set<ConstraintViolation<OwnerRequest>> validates = validator.validate(ownerRequest);
+        Set<ConstraintViolation<OwnerUpdateRequest>> validates = validator.validate(ownerRequest);
 
         // Then
         assertThat(validates).isNotNull();

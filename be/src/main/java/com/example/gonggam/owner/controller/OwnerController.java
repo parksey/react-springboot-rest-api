@@ -1,6 +1,6 @@
 package com.example.gonggam.owner.controller;
 
-import com.example.gonggam.owner.dto.OwnerRequest;
+import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
 import com.example.gonggam.owner.service.OwnerService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class OwnerController {
     }
 
     @PostMapping("/owners")
-    public ResponseEntity<OwnerResponse> createOwner(@RequestBody OwnerRequest ownerRequest) {
+    public ResponseEntity<OwnerResponse> createOwner(@RequestBody OwnerUpdateRequest ownerRequest) {
         OwnerResponse ownerResponse = ownerService.createOperator(ownerRequest);
         return new ResponseEntity<>(ownerResponse, HttpStatus.CREATED);
     }
