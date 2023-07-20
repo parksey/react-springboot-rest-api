@@ -65,7 +65,8 @@ class OwnerServiceTest {
 
     @Nested
     @DisplayName("사업자 생성 테스트")
-    public class Create {
+    class Create {
+
         @Test
         void 사업자_생성_테스트() {
             // Given
