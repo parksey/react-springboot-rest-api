@@ -1,6 +1,16 @@
 package com.example.gonggam.space;
 
+import com.example.gonggam.owner.exception.OwnerException;
+import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.space.domain.SharedSpace;
+import com.example.gonggam.space.dto.SpaceCreateRequest;
+import com.example.gonggam.space.dto.SpaceCreateResponse;
+import com.example.gonggam.space.repository.SharedSpaceRepository;
+import com.example.gonggam.space.service.SharedSpaceService;
+import com.example.gonggam.space.service.SpaceMapper;
+import com.example.gonggam.util.exception.CustomValidationStatus;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,51 +19,129 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("SpaceService 테스트")
 @ExtendWith(MockitoExtension.class)
 public class SpaceServiceTest {
 
     @InjectMocks
-    private SpaceService spaceService;
+    private SharedSpaceService spaceService;
 
     @Mock
-    private SpaceRepository spaceRepository;
+    private SharedSpaceRepository spaceRepository;
+    @Mock
+    private OwnerRepository ownerRepository;
 
     @Spy
     private SpaceMapper spaceMapper;
 
-    @Test
-    void 장소_생성_성공_테스트() {
+    private SharedSpace sharedSpace;
+
+    @BeforeEach
+    void init() {
         // Given
-        Email email = new Email("abc@naver.com");
+        long ownerId = 1L;
         String title = "타이틀";
         String location = "위치";
         int capacity = 8;
-        LocalDate startAt = LocalDate.now();
-        LocalDate endAt = LocalDate.now().plusDays(2);
+        long amont = 29000L;
+        LocalDateTime startAt = LocalDateTime.now();
+        LocalDateTime endAt = LocalDateTime.now().plusDays(2);
 
-        SpaceCreateReqeust spaceCreateReqeust = new SpaceCreateRequest();
-        SharedSpace sharedSpace = spaceMapper.toEntity(spaceCreateReqeust);
-        SpaceCreateResponse expectResponse = spaceMapper.toResponse(sharedSpace);
+        sharedSpace = SharedSpace.builder()
+                .ownerId(ownerId)
+                .title(title)
+                .location(location)
+                .capacity(capacity)
+                .amount(amont)
+                .startAt(startAt)
+                .endAt(endAt)
+                .build();
+    }
 
-        given(spaceRepository.existsByEmail(email)).willReturn(false);
-        given(spaceRepository.save(sharedSpace)).willReturn(saveSpace);
+
+    @Test
+    void 장소_생성_성공_테스트() {
+        // Given
+        SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
+                .ownerId(sharedSpace.getOwnerId())
+                .title(sharedSpace.getTitle())
+                .location(sharedSpace.getLocation())
+                .capacity(sharedSpace.getCapacity())
+                .startAt(sharedSpace.getStartAt())
+                .endAt(sharedSpace.getEndAt())
+                .amount(sharedSpace.getAmount())
+                .build();
+
+        SharedSpace savedSharedSpace = SharedSpace.builder()
+                .ownerId(sharedSpace.getOwnerId())
+                .title(sharedSpace.getTitle())
+                .location(sharedSpace.getLocation())
+                .capacity(sharedSpace.getCapacity())
+                .startAt(sharedSpace.getStartAt())
+                .endAt(sharedSpace.getEndAt())
+                .amount(sharedSpace.getAmount())
+                .build();
+
+        SpaceCreateResponse expectResponse = SpaceCreateResponse.builder()
+                .title(sharedSpace.getTitle())
+                .description(sharedSpace.getDescription())
+                .location(sharedSpace.getLocation())
+                .capacity(sharedSpace.getCapacity())
+                .amount(sharedSpace.getAmount())
+                .startAt(sharedSpace.getStartAt())
+                .endAt(sharedSpace.getEndAt())
+                .build();
+
+        given(ownerRepository.existsById(spaceCreateRequest.getOwnerId())).willReturn(true);
+        given(spaceMapper.toEntity(spaceCreateRequest)).willReturn(sharedSpace);
+        given(spaceRepository.save(sharedSpace)).willReturn(savedSharedSpace);
 
         // When
-        final SpaceCreateResponse spaceCreateResponse =  spaceService.createSpace(spaceCreateReqeust);
+        SpaceCreateResponse createResponse =  spaceService.createSpace(spaceCreateRequest);
 
         // Then
-        assertThat(expectResponse).isEqualTo(spaceCreateResponse);
+        assertThat(expectResponse).isNotNull();
+        assertAll(
+                () -> assertThat(expectResponse.getTitle()).isEqualTo(createResponse.getTitle()),
+                () -> assertThat(expectResponse.getAmount()).isEqualTo(createResponse.getAmount()),
+                () -> assertThat(expectResponse.getCapacity()).isEqualTo(createResponse.getCapacity()),
+                () -> assertThat(expectResponse.getLocation()).isEqualTo(createResponse.getLocation()),
+                () -> assertThat(expectResponse.getStartAt()).isEqualTo(createResponse.getStartAt()),
+                () -> assertThat(expectResponse.getEndAt()).isEqualTo(createResponse.getEndAt())
+        );
 
-        verify(spaceMapper).toEntity(spaceCreateReqeust);
-        verify(spaceRepository).existsByEmail(email);
-        verify(spaceRepository).save(sharedSpace);
-        verify(spaceMapper).toResponse(savedSpace);
+        verify(ownerRepository).existsById(spaceCreateRequest.getOwnerId());
+        verify(spaceMapper).toEntity(spaceCreateRequest);
+        verify(spaceRepository).save(sharedSpace);;
+    }
+
+    @Test
+    void 장소_생성_동일한_이메일로_등록하여_실패_테스트() {
+        // Given
+        SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
+                .ownerId(sharedSpace.getOwnerId())
+                .title(sharedSpace.getTitle())
+                .location(sharedSpace.getLocation())
+                .capacity(sharedSpace.getCapacity())
+                .startAt(sharedSpace.getStartAt())
+                .endAt(sharedSpace.getEndAt())
+                .amount(sharedSpace.getAmount())
+                .build();
+
+        given(ownerRepository.existsById(spaceCreateRequest.getOwnerId())).willReturn(false);
+
+        // When + Then
+        assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest))
+                .isInstanceOf(OwnerException.class)
+                .hasMessage(CustomValidationStatus.NO_OWNER.getMessage());
     }
 }
 

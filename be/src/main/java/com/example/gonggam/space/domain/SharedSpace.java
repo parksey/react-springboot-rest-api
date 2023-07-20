@@ -1,14 +1,22 @@
 package com.example.gonggam.space.domain;
 
 import com.example.gonggam.space.exception.SharedSpaceException;
-import jakarta.persistence.*;
+import com.example.gonggam.util.UtilsCode;
+import com.example.gonggam.util.exception.CustomValidationStatus;
+import com.example.gonggam.util.exception.ValidationStatus;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class SharedSpace {
 
@@ -16,51 +24,77 @@ public class SharedSpace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spaceId;
 
-    @NotNull
-    @Column(unique = true)
-    private String email;
-
-    @Size(max = 50, message = "{error.global.LONG-INPUT}")
-    @NotNull(message = "error.global.NO-DATA")
+    @Size(max = 50, message = ValidationStatus.Space.OVER_SIZE)
+    @NotNull(message = ValidationStatus.Global.NO_DATA)
     private String title;
 
     private String description;
 
-    @Size(max = 100, message = "{error.global.LONG-INPUT}")
-    @NotNull(message = "값이 안들어 왔습니다.")
+    @Size(max = 100, message = ValidationStatus.Space.OVER_SIZE)
+    @NotNull(message = ValidationStatus.Global.NO_DATA)
     private String location;
 
+    @Min(value = 0, message = ValidationStatus.Space.UNDER_SIZE)
+    private Integer capacity;
 
-    @Min(value = 0, message = "{error.global.UNDER-MIN}")
-    private int capacity;
+    @Min(value = UtilsCode.Space.MIN_MONEY, message = ValidationStatus.Space.UNDER_MIN_CAPACIRY)
+    private long amount;
 
-    @NotNull(message = "값이 안들어 왔습니다.")
-    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = ValidationStatus.Global.NO_DATA)
     private LocalDateTime startAt;
 
-    @NotNull(message = "값이 안들어 왔습니다.")
-    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = ValidationStatus.Global.NO_DATA)
     private LocalDateTime endAt;
 
+    @NotNull(message = ValidationStatus.Global.NO_DATA)
+    private Long ownerId;
 
-    @Builder
-    public SharedSpace(String title, String email, String description, String location, int capacity, LocalDateTime startAt, LocalDateTime endAt) {
+    private SharedSpace(final Long spaceId,
+                        final String title,
+                        final String description,
+                        final String location,
+                        final Integer capacity,
+                        final long amount,
+                        final LocalDateTime startAt,
+                        final LocalDateTime endAt,
+                        Long ownerId) {
         validateTime(startAt, endAt);
-        this.email = email;
+        this.spaceId = spaceId;
         this.title = title;
         this.description = description;
         this.location = location;
-        this.capacity = capacity;
+        this.capacity = validateAndGetDefaultCapacity(capacity);
+        this.amount = amount;
         this.startAt = startAt;
         this.endAt = endAt;
+        this.ownerId = ownerId;
+    }
+
+    @Builder
+    public SharedSpace (String title,
+                       String description,
+                       String location,
+                       Integer capacity,
+                       long amount,
+                       LocalDateTime startAt,
+                       LocalDateTime endAt,
+                       Long ownerId) {
+        this(null, title, description, location, capacity, amount, startAt, endAt, ownerId);
     }
 
     protected SharedSpace() {
     }
 
+    private Integer validateAndGetDefaultCapacity(Integer capacity) {
+        if (capacity == null) {
+            return UtilsCode.Space.MIN_SPACE_CAPACITY;
+        }
+        return capacity;
+    }
+
     private void validateTime(LocalDateTime startAt, LocalDateTime endAt) {
         if (startAt.isAfter(endAt)) {
-            throw new SharedSpaceException("시작일자와 종료일자가 잘못되었습니다.");
+            throw new SharedSpaceException(CustomValidationStatus.TIME_ERROR);
         }
     }
 }

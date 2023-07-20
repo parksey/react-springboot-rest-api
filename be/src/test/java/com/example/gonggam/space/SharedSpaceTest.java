@@ -27,16 +27,17 @@ class SharedSpaceTest {
     @Test
     void 공유공간_생성_테스트() {
         // Given
-        String email = "email";
         String title = "title";
         String description = "description";
         String location = "서울특별시 강남구 테헤란로 420";
         int capacity = 8;
+        long amount = 29000L;
         LocalDateTime startAt = LocalDateTime.now().plusDays(7);
         LocalDateTime endAt = LocalDateTime.now().plusDays(28);
+        Long ownerId = 1L;
 
         // When
-        SharedSpace space = new SharedSpace(title, description, location, capacity, startAt, endAt);
+        SharedSpace space = new SharedSpace(title, description, location, capacity, amount, startAt, endAt, ownerId);
 
         // Then
         assertThat(space).isNotNull();
@@ -51,6 +52,7 @@ class SharedSpaceTest {
         int capacity = 8;
         LocalDateTime startAt = LocalDateTime.now().plusDays(28);
         LocalDateTime endAt = LocalDateTime.now().plusDays(7);
+        Long ownerId = 1l;
 
         // When + Then
         assertThatThrownBy(()-> SharedSpace.builder()
@@ -60,6 +62,7 @@ class SharedSpaceTest {
                 .capacity(capacity)
                 .startAt(startAt)
                 .endAt(endAt)
+                .ownerId(ownerId)
                 .build())
                 .isInstanceOf(SharedSpaceException.class)
                 .hasMessage("시작일자와 종료일자가 잘못되었습니다.");
@@ -74,6 +77,7 @@ class SharedSpaceTest {
         int capacity = -1;
         LocalDateTime startAt = LocalDateTime.now().plusDays(7);
         LocalDateTime endAt = LocalDateTime.now().plusDays(28);
+        Long ownerId = 1l;
 
         SharedSpace sharedSpace = SharedSpace.builder()
                 .title(title)
@@ -82,6 +86,7 @@ class SharedSpaceTest {
                 .capacity(capacity)
                 .startAt(startAt)
                 .endAt(endAt)
+                .ownerId(ownerId)
                 .build();
 
         // When
