@@ -1,5 +1,6 @@
 package com.example.gonggam.owner;
 
+import com.example.gonggam.global.testconfig.RepositoryAnnotation;
 import com.example.gonggam.owner.domain.Owner;
 import com.example.gonggam.owner.repository.OwnerRepository;
 import org.junit.jupiter.api.*;
@@ -18,10 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("OwnerRepository 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DataJpaTest
 @ActiveProfiles("test")
-class OwnerRepositoryTest {
+class OwnerRepositoryTest extends RepositoryAnnotation {
 
     @Autowired
     private OwnerRepository ownerRepository;
