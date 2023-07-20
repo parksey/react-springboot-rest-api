@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("OwnerRepository 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ActiveProfiles("test")
-class OwnerRepositoryTest implements RepositoryAnnotation {
+class OwnerRepositoryTest extends RepositoryAnnotation {
 
     @Autowired
     private OwnerRepository ownerRepository;

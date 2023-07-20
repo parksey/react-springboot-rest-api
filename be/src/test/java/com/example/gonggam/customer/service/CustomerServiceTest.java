@@ -1,8 +1,8 @@
 package com.example.gonggam.customer.service;
 
-import com.example.gonggam.customer.exception.CustomerException;
 import com.example.gonggam.customer.domain.Customer;
 import com.example.gonggam.customer.dto.CustomerCreateRequest;
+import com.example.gonggam.customer.exception.CustomerException;
 import com.example.gonggam.customer.repository.CustomerRepository;
 import com.example.gonggam.util.exception.CustomValidationStatus;
 import org.junit.jupiter.api.*;
@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -60,7 +59,7 @@ class CustomerServiceTest {
             given(customerMapper.toEntity(customerCreateRequest)).willReturn(customer);
 
             // When
-            customerService.regist(customerCreateRequest);
+            customerService.register(customerCreateRequest);
 
             // Then
             verify(customerRepository).save(customer);
@@ -79,7 +78,7 @@ class CustomerServiceTest {
             given(customerRepository.existsByEmail(customerCreateRequest.getEmail())).willReturn(true);
 
             // When
-            assertThatThrownBy(()->customerService.regist(customerCreateRequest))
+            assertThatThrownBy(()->customerService.register(customerCreateRequest))
                     .isInstanceOf(CustomerException.class)
                     .hasMessage(CustomValidationStatus.EXIST_USER.getMessage());
         }

@@ -1,5 +1,7 @@
-package com.example.gonggam.owner.controller;
+package com.example.gonggam.customer.service.controller;
 
+import com.example.gonggam.customer.domain.Customer;
+import com.example.gonggam.customer.dto.CustomerCreateRequest;
 import com.example.gonggam.global.testconfig.ControllerAnnotation;
 import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -19,47 +20,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Owner 통합 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ActiveProfiles("test")
-class OwnerControllerTest extends ControllerAnnotation {
+public class CustomerControllerTest extends ControllerAnnotation {
 
     @Test
-    void 사업자_생성_테스트() throws Exception {
+    void 회원_생성_테스트() throws Exception {
         // Given
+        String name = "psy";
         String phone = "01012345678";
-        String ownerNo = "1234567890";
         String email = "psy@naver.com";
+        String password = "1234";
 
-        OwnerUpdateRequest ownerRequest = OwnerUpdateRequest.builder()
-                .phone(phone)
-                .ownerNo(ownerNo)
+        CustomerCreateRequest customerCreateRequest = CustomerCreateRequest.builder()
                 .email(email)
+                .password(password)
+                .name(name)
+                .phone(phone)
                 .build();
 
         // When
         ResultActions resultActions = mockMvc.perform(
-                post(getUrl("/owners"))
+                post(getUrl("/users"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(ownerRequest)));
+                        .content(objectMapper.writeValueAsString(customerCreateRequest)));
 
         // Then
         resultActions.andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("email").value(email))
                 .andExpect(jsonPath("phone").value(phone))
-                .andExpect(jsonPath("ownerNo").value(ownerNo));
-    }
-
-    @Test
-    void 사업자_개인정보_조회() throws Exception {
-        // Given
-        String ownerNo = "1234567890";
-
-        // When
-        ResultActions resultActions = mockMvc.perform(
-                get(getUrl(String.format("/owners/%s",ownerNo))));
-
-        // Then
-        resultActions.andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("ownerNo").value(ownerNo));
+                .andExpect(jsonPath("name").value(name));
     }
 }

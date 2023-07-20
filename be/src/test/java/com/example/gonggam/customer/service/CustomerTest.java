@@ -1,13 +1,11 @@
 package com.example.gonggam.customer.service;
 
 import com.example.gonggam.customer.domain.Customer;
-import com.example.gonggam.owner.domain.Owner;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.*;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;

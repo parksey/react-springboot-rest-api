@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("SharedSpaceRepository 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ActiveProfiles("test")
-class SharedSpaceRepositoryTest implements RepositoryAnnotation {
+class SharedSpaceRepositoryTest extends RepositoryAnnotation {
 
     @Autowired
     private SharedSpaceRepository sharedSpaceRepository;

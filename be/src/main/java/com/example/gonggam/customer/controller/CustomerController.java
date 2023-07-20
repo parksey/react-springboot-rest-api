@@ -20,9 +20,9 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/owners")
-    public ResponseEntity<Void> createOwner(@RequestBody CustomerCreateRequest customerCreateRequest) {
-        customerService.regist(customerCreateRequest);
+    @PostMapping("/customer")
+    public ResponseEntity<Void> createCustomer(@RequestBody CustomerCreateRequest customerCreateRequest) {
+        customerService.register(customerCreateRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

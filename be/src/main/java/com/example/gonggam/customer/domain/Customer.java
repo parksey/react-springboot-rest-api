@@ -44,6 +44,7 @@ public class Customer {
         this.customer_id = customer_id;
         this.email = email;
         this.password = password;
+        this.phone = phone;
         this.name = name;
         this.createAt = createAt;
     }

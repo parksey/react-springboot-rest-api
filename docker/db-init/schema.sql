@@ -35,3 +35,21 @@ INSERT INTO shared_space (title, description, location, capacity, amount, start_
 VALUES
     ('title1', '설명1', '서울특별시', 5, 29000, '2023-07-23 13:00', '2023-07-25 18:00', 1),
     ('제목', '설명2', '인천', 90, 10000, '2023-07-23 13:00', '2023-07-25 18:00', 2);
+
+
+DROP TABLE IF EXISTS customer;
+CREATE TABLE customer
+(
+    customer_id BIGINT       AUTO_INCREMENT,
+    email       VARCHAR(50)  NOT NULL,
+    name        VARCHAR(50)  NOT NULL,
+    password    VARCHAR(255) NOT NULL,
+    phone       VARCHAR(11)  NOT NULL,
+    create_at   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer_id)
+);
+
+INSERT INTO customer(email, name, password, phone)
+VALUES
+    ('psy@naver.com', 'psy', '1234', '01054555555'),
+    ('psy2@naver.com', 'psy2', '5678', '01099998888');
