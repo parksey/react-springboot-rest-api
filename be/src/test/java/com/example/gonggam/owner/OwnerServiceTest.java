@@ -2,8 +2,8 @@ package com.example.gonggam.owner;
 
 import com.example.gonggam.owner.domain.Owner;
 import com.example.gonggam.owner.dto.OwnerRemoveRequest;
-import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
+import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.exception.OwnerException;
 import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.owner.service.OwnerMapper;
@@ -25,7 +25,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -184,7 +183,7 @@ class OwnerServiceTest {
             given(sharedSpaceRepository.findAllByOwnerNo(ownerRemoveRequest.getOwnerNo())).willReturn(List.of());
 
             // When
-            ownerService.removeOwner(ownerRemoveRequest);
+            ownerService.deleteOwner(ownerRemoveRequest);
 
             // Then
             verify(ownerRepository).delete(owner);
@@ -196,7 +195,7 @@ class OwnerServiceTest {
             OwnerRemoveRequest ownerRemoveRequest = new OwnerRemoveRequest(owner.getOwnerNo());
 
             // When + Then
-            assertThatThrownBy(()->ownerService.removeOwner(ownerRemoveRequest))
+            assertThatThrownBy(()->ownerService.deleteOwner(ownerRemoveRequest))
                     .isInstanceOf(OwnerException.class)
                     .hasMessage(CustomValidationStatus.NO_OWNER.getMessage());
         }
@@ -220,7 +219,7 @@ class OwnerServiceTest {
 
 
             // When + Then
-            assertThatThrownBy(()->ownerService.removeOwner(ownerRemoveRequest))
+            assertThatThrownBy(()->ownerService.deleteOwner(ownerRemoveRequest))
                     .isInstanceOf(OwnerException.class)
                     .hasMessage(CustomValidationStatus.NO_SHAED_SPACE.getMessage());
         }

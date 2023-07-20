@@ -10,6 +10,10 @@ public class OwnerRemoveRequest {
     @NotBlank(message = ValidationStatus.Global.NO_DATA)
     private String ownerNo;
 
+    private OwnerRemoveRequest() {
+
+    }
+
     public OwnerRemoveRequest(final String ownerNo) {
         this.ownerNo = ownerNo;
     }

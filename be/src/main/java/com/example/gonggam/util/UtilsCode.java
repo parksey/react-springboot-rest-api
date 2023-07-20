@@ -2,7 +2,6 @@ package com.example.gonggam.util;
 
 import com.example.gonggam.util.exception.CustomValidationStatus;
 import com.example.gonggam.util.exception.UtilsException;
-import com.example.gonggam.util.exception.ValidationStatus;
 
 public class UtilsCode {
 
@@ -10,7 +9,7 @@ public class UtilsCode {
 
         public static final String PHONE_PATTERN = "\\d{10,11}";
         public static final String EMAIL_PATTERN = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}";
-
+        public static final String TIME_ZONE =  "Asia/Seoul";
 
         private Global() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
@@ -20,8 +19,8 @@ public class UtilsCode {
     public static final class Space {
 
         public static final int MIN_SPACE_CAPACITY = 1;
-        public static final int MIN_MONEY = 1;
-        public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
+        public static final int MIN_MONEY = 0;
+        public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
         private Space() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);

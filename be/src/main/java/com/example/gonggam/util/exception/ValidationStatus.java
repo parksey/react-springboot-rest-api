@@ -16,6 +16,7 @@ public final class ValidationStatus {
 
     public static class  Space {
 
+        public static final String UNDER_MIN_MONEY = "0이상의 값이 들어와야 합니다.";
         public static final String UNDER_MIN_CAPACIRY = "최소 인원은 보다 작습니다,";
         public static final String OVER_SIZE = "최대 입력 사이즈를 넘겼습니다.";
         public static final String UNDER_SIZE = "최소 입력 사이즈를 충족시켜야 합니다.";

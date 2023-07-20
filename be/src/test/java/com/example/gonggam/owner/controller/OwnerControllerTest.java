@@ -1,21 +1,16 @@
 package com.example.gonggam.owner.controller;
 
-import com.example.gonggam.GonggamApplication;
+import com.example.gonggam.global.testconfig.ControllerAnnotation;
 import com.example.gonggam.owner.dto.OwnerUpdateRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,18 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Owner 통합 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ActiveProfiles("test")
-@Transactional
-@SpringBootTest(classes = GonggamApplication.class)
-@AutoConfigureMockMvc
-class OwnerControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private static String API_VERSION = "/api/v1";
+class OwnerControllerTest extends ControllerAnnotation {
 
     @Test
     void 사업자_생성_테스트() throws Exception {
@@ -64,8 +48,18 @@ class OwnerControllerTest {
                 .andExpect(jsonPath("ownerNo").value(ownerNo));
     }
 
-    private String getUrl(String url) {
-        return API_VERSION + url;
-    }
+    @Test
+    void 사업자_개인정보_조회() throws Exception {
+        // Given
+        String ownerNo = "1234567890";
 
+        // When
+        ResultActions resultActions = mockMvc.perform(
+                get(getUrl(String.format("/owners{}",ownerNo))));
+
+        // Then
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("ownerNo").value(ownerNo));
+    }
 }

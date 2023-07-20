@@ -26,6 +26,13 @@ public class OwnerService {
         this.ownerMapper = ownerMapper;
     }
 
+    public OwnerResponse findOwnerInfo(String ownerNo) {
+        Owner owner = ownerRepository.findByOwnerNo(ownerNo)
+                .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
+
+        return ownerMapper.toResponse(owner);
+    }
+
     public OwnerResponse createOperator(OwnerUpdateRequest ownerRequest) {
         boolean alreadyOwnerNoExist = ownerRepository.existsByOwnerNo(ownerRequest.getOwnerNo());
 
@@ -48,7 +55,7 @@ public class OwnerService {
         ownerRepository.save(existsOwner);
     }
 
-    public void removeOwner(OwnerRemoveRequest ownerRemoveRequest) {
+    public void deleteOwner(OwnerRemoveRequest ownerRemoveRequest) {
         Owner existsOwner = ownerRepository.findByOwnerNo(ownerRemoveRequest.getOwnerNo())
                 .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
 
