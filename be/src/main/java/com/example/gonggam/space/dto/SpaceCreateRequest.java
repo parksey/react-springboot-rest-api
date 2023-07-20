@@ -2,6 +2,7 @@ package com.example.gonggam.space.dto;
 
 import com.example.gonggam.util.exception.ValidationStatus;
 import com.example.gonggam.util.UtilsCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,11 +32,9 @@ public class SpaceCreateRequest {
     @Min(value = UtilsCode.Space.MIN_MONEY, message = ValidationStatus.Space.UNDER_MIN_CAPACIRY)
     private final long amount;
 
-    @DateTimeFormat(pattern = UtilsCode.Space.DATE_FORMAT)
     @NotNull(message = ValidationStatus.Global.NO_DATA)
     private final LocalDateTime startAt;
 
-    @DateTimeFormat(pattern = UtilsCode.Space.DATE_FORMAT)
     @NotNull(message = ValidationStatus.Global.NO_DATA)
     private final LocalDateTime endAt;
 

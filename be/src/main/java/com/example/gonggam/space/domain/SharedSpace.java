@@ -37,8 +37,10 @@ public class SharedSpace {
     @Min(value = 0, message = ValidationStatus.Space.UNDER_SIZE)
     private Integer capacity;
 
-    @Min(value = UtilsCode.Space.MIN_MONEY, message = ValidationStatus.Space.UNDER_MIN_CAPACIRY)
+    @Min(value = UtilsCode.Space.MIN_MONEY, message = ValidationStatus.Space.UNDER_MIN_MONEY)
+    @NotNull
     private long amount;
+
 
     @NotNull(message = ValidationStatus.Global.NO_DATA)
     private LocalDateTime startAt;

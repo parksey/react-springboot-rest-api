@@ -5,10 +5,13 @@ import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.space.domain.SharedSpace;
 import com.example.gonggam.space.dto.SpaceCreateRequest;
 import com.example.gonggam.space.dto.SpaceCreateResponse;
+import com.example.gonggam.space.dto.SpaceSummary;
 import com.example.gonggam.space.repository.SharedSpaceRepository;
 import com.example.gonggam.util.exception.CustomValidationStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class SharedSpaceService {
@@ -36,5 +39,10 @@ public class SharedSpaceService {
         SharedSpace sharedSpace = spaceMapper.toEntity(spaceCreateRequest);
         SharedSpace savedSharedSpace = sharedSpaceRepository.save(sharedSpace);
         return spaceMapper.toResponse(savedSharedSpace);
+    }
+
+    public List<SpaceSummary> getSpaces(String ownerNo) {
+        List<SharedSpace> owners =  sharedSpaceRepository.findAllByOwnerNo(ownerNo);
+        return spaceMapper.toResponse(owners);
     }
 }
