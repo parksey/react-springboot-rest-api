@@ -1,14 +1,12 @@
 package com.example.gonggam.space.dto;
 
-import com.example.gonggam.util.exception.ValidationStatus;
 import com.example.gonggam.util.UtilsCode;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.gonggam.util.exception.ValidationStatus;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 

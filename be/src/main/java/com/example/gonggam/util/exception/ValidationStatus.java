@@ -8,13 +8,14 @@ public final class ValidationStatus {
         public static final String NOT_PHONE_PATTERN = "핸드폰 패턴이 맞지 않습니다.";
         public static final String NO_DATA = "값이 안들어 왔습니다.";
         public static final String NOT_BLANK = "빈 값이면 안됩니다.";
+        public static final String SECRET_KEY = "시크릿키";
 
         private Global() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
         }
     }
 
-    public static class  Space {
+    public static class Space {
 
         public static final String UNDER_MIN_MONEY = "0이상의 값이 들어와야 합니다.";
         public static final String UNDER_MIN_CAPACIRY = "최소 인원은 보다 작습니다,";
@@ -26,7 +27,7 @@ public final class ValidationStatus {
         }
     }
 
-    public static class  Owner {
+    public static class Owner {
 
         public static final String NO_OWNER_NUMBER = "사업자 번호가 없습니다.";
 

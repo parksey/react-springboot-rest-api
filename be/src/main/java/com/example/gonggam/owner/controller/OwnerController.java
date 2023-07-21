@@ -1,8 +1,8 @@
 package com.example.gonggam.owner.controller;
 
 import com.example.gonggam.owner.dto.OwnerRemoveRequest;
-import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
+import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.service.OwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,7 @@
 package com.example.gonggam.space.controller;
 
 import com.example.gonggam.global.testconfig.ControllerAnnotation;
-import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.space.dto.SpaceCreateRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,7 +14,8 @@ import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("SharedSpace 통합 테스트")
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

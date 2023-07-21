@@ -1,7 +1,7 @@
 package com.example.gonggam.owner.dto;
 
-import com.example.gonggam.util.exception.ValidationStatus;
 import com.example.gonggam.util.UtilsCode;
+import com.example.gonggam.util.exception.ValidationStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ public class OwnerUpdateRequest {
     @NotNull
     private String phone;
 
-    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN,message = ValidationStatus.Global.NOT_EMAIL)
+    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN, message = ValidationStatus.Global.NOT_EMAIL)
     @NotNull
     private String email;
 

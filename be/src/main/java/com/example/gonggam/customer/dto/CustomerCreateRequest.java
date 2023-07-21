@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public class CustomerCreateRequest {
 
-    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN,message = ValidationStatus.Global.NOT_EMAIL)
+    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN, message = ValidationStatus.Global.NOT_EMAIL)
     @NotNull
     private String email;
 

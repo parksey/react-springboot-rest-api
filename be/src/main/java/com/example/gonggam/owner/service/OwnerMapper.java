@@ -1,8 +1,8 @@
 package com.example.gonggam.owner.service;
 
 import com.example.gonggam.owner.domain.Owner;
-import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
+import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

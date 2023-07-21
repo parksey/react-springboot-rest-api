@@ -38,7 +38,7 @@ public class SpaceMapper {
 
     public List<SpaceSummary> toResponse(List<SharedSpace> sharedSpaces) {
         return sharedSpaces.stream()
-                .map(sharedSpace->toSpaceSummary(sharedSpace))
+                .map(sharedSpace -> toSpaceSummary(sharedSpace))
                 .toList();
     }
 

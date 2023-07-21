@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @SpringBootTest(classes = GonggamApplication.class)
 @AutoConfigureMockMvc
-public class ControllerAnnotation{
+public class ControllerAnnotation {
 
     private static String API_VERSION = "/api/v1";
 

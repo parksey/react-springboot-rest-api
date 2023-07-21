@@ -42,7 +42,7 @@ public class SharedSpaceService {
     }
 
     public List<SpaceSummary> getSpaces(String ownerNo) {
-        List<SharedSpace> owners =  sharedSpaceRepository.findAllByOwnerNo(ownerNo);
+        List<SharedSpace> owners = sharedSpaceRepository.findAllByOwnerNo(ownerNo);
         return spaceMapper.toResponse(owners);
     }
 }

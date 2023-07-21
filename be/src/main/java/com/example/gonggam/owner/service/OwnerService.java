@@ -28,7 +28,7 @@ public class OwnerService {
 
     public OwnerResponse findOwnerInfo(String ownerNo) {
         Owner owner = ownerRepository.findByOwnerNo(ownerNo)
-                .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
+                .orElseThrow(() -> new OwnerException(CustomValidationStatus.NO_OWNER));
 
         return ownerMapper.toResponse(owner);
     }
@@ -48,7 +48,7 @@ public class OwnerService {
 
     public void updateOperator(OwnerUpdateRequest ownerRequest) {
         Owner existsOwner = ownerRepository.findByOwnerNo(ownerRequest.getOwnerNo())
-                .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
+                .orElseThrow(() -> new OwnerException(CustomValidationStatus.NO_OWNER));
 
         Owner owner = ownerMapper.toEntity(ownerRequest);
         existsOwner.update(owner);
@@ -57,7 +57,7 @@ public class OwnerService {
 
     public void deleteOwner(OwnerRemoveRequest ownerRemoveRequest) {
         Owner existsOwner = ownerRepository.findByOwnerNo(ownerRemoveRequest.getOwnerNo())
-                .orElseThrow(()->new OwnerException(CustomValidationStatus.NO_OWNER));
+                .orElseThrow(() -> new OwnerException(CustomValidationStatus.NO_OWNER));
 
         List<SharedSpace> sharedSpaces = sharedSpaceRepository.findAllByOwnerNo(ownerRemoveRequest.getOwnerNo());
 
