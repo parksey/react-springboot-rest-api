@@ -17,9 +17,9 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long customer_id;
+    Long customerId;
 
-    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN,message = ValidationStatus.Global.NOT_EMAIL)
+    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN, message = ValidationStatus.Global.NOT_EMAIL)
     @NotNull
     @Column(unique = true)
     String email;
@@ -35,13 +35,13 @@ public class Customer {
 
     LocalDateTime createAt;
 
-    private Customer(final Long customer_id,
+    private Customer(final Long customerId,
                      final String email,
                      final String password,
                      final String name,
                      final String phone,
                      final LocalDateTime createAt) {
-        this.customer_id = customer_id;
+        this.customerId = customerId;
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -59,6 +59,4 @@ public class Customer {
 
     protected Customer() {
     }
-
-
 }
