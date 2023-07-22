@@ -2,7 +2,7 @@ package com.example.gonggam.space.service;
 
 import com.example.gonggam.space.domain.SharedSpace;
 import com.example.gonggam.space.dto.SpaceCreateRequest;
-import com.example.gonggam.space.dto.SpaceCreateResponse;
+import com.example.gonggam.space.dto.SpaceInfoResponse;
 import com.example.gonggam.space.dto.SpaceSummary;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +24,8 @@ public class SpaceMapper {
                 .build();
     }
 
-    public SpaceCreateResponse toResponse(SharedSpace sharedSpace) {
-        return SpaceCreateResponse.builder()
+    public SpaceInfoResponse toResponse(SharedSpace sharedSpace) {
+        return SpaceInfoResponse.builder()
                 .title(sharedSpace.getTitle())
                 .capacity(sharedSpace.getCapacity())
                 .description(sharedSpace.getDescription())
@@ -44,6 +44,7 @@ public class SpaceMapper {
 
     private SpaceSummary toSpaceSummary(SharedSpace sharedSpace) {
         return SpaceSummary.builder()
+                .spaceId(sharedSpace.getSpaceId())
                 .title(sharedSpace.getTitle())
                 .amount(sharedSpace.getAmount())
                 .capacity(sharedSpace.getCapacity())

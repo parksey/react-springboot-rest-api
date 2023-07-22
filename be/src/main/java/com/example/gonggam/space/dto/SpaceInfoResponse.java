@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class SpaceCreateResponse {
+public class SpaceInfoResponse {
 
     private String title;
     private String description;
@@ -17,13 +17,13 @@ public class SpaceCreateResponse {
     private LocalDateTime endAt;
 
     @Builder
-    public SpaceCreateResponse(final String title,
-                               final String description,
-                               final String location,
-                               final int capacity,
-                               final long amount,
-                               final LocalDateTime startAt,
-                               final LocalDateTime endAt) {
+    public SpaceInfoResponse(final String title,
+                             final String description,
+                             final String location,
+                             final int capacity,
+                             final long amount,
+                             final LocalDateTime startAt,
+                             final LocalDateTime endAt) {
         this.title = title;
         this.description = description;
         this.location = location;

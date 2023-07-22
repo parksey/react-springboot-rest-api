@@ -4,12 +4,11 @@ import com.example.gonggam.owner.exception.OwnerException;
 import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.space.domain.SharedSpace;
 import com.example.gonggam.space.dto.SpaceCreateRequest;
-import com.example.gonggam.space.dto.SpaceCreateResponse;
+import com.example.gonggam.space.dto.SpaceInfoResponse;
 import com.example.gonggam.space.repository.SharedSpaceRepository;
 import com.example.gonggam.space.service.SharedSpaceService;
 import com.example.gonggam.space.service.SpaceMapper;
 import com.example.gonggam.util.exception.CustomValidationStatus;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -90,7 +89,7 @@ public class SpaceServiceTest {
                 .amount(sharedSpace.getAmount())
                 .build();
 
-        SpaceCreateResponse expectResponse = SpaceCreateResponse.builder()
+        SpaceInfoResponse expectResponse = SpaceInfoResponse.builder()
                 .title(sharedSpace.getTitle())
                 .description(sharedSpace.getDescription())
                 .location(sharedSpace.getLocation())
@@ -105,7 +104,7 @@ public class SpaceServiceTest {
         given(spaceRepository.save(sharedSpace)).willReturn(savedSharedSpace);
 
         // When
-        SpaceCreateResponse createResponse =  spaceService.createSpace(spaceCreateRequest);
+        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest);
 
         // Then
         assertThat(expectResponse).isNotNull();

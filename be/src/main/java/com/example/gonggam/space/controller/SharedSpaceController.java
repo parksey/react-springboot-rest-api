@@ -1,7 +1,7 @@
 package com.example.gonggam.space.controller;
 
 import com.example.gonggam.space.dto.SpaceCreateRequest;
-import com.example.gonggam.space.dto.SpaceCreateResponse;
+import com.example.gonggam.space.dto.SpaceInfoResponse;
 import com.example.gonggam.space.dto.SpaceSummary;
 import com.example.gonggam.space.service.SharedSpaceService;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,15 @@ public class SharedSpaceController {
     }
 
     @PostMapping("/spaces")
-    public ResponseEntity<SpaceCreateResponse> creatSpace(@RequestBody SpaceCreateRequest spaceCreateRequest) {
-        SpaceCreateResponse createResponse = sharedSpaceService.createSpace(spaceCreateRequest);
-        return new ResponseEntity<>(createResponse, HttpStatus.CREATED);
+    public ResponseEntity<SpaceInfoResponse> creatSpace(@RequestBody SpaceCreateRequest spaceCreateRequest) {
+        SpaceInfoResponse infoResponse = sharedSpaceService.createSpace(spaceCreateRequest);
+        return new ResponseEntity<>(infoResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/spaces")
+    public ResponseEntity<List<SpaceSummary>> spacesAll() {
+        List<SpaceSummary> spacesResponse = sharedSpaceService.getSpacesAll();
+        return new ResponseEntity<>(spacesResponse, HttpStatus.OK);
     }
 
     @GetMapping("/spaces/{ownerNo}")
@@ -31,5 +37,11 @@ public class SharedSpaceController {
         List<SpaceSummary> spacesResponse = sharedSpaceService.getSpaces(ownerNo);
 
         return new ResponseEntity<>(spacesResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/spaces/{spaceId}")
+    public ResponseEntity<SpaceInfoResponse> spaceInfo(@PathVariable long spaceId) {
+        SpaceInfoResponse infoResponse = sharedSpaceService.spaceInfo(spaceId);
+        return new ResponseEntity<>(infoResponse, HttpStatus.OK);
     }
 }
