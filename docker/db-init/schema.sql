@@ -46,7 +46,8 @@ CREATE TABLE customer
     password    VARCHAR(255) NOT NULL,
     phone       VARCHAR(11)  NOT NULL,
     create_at   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer_id)
+    PRIMARY KEY (customer_id),
+    CONSTRAINT uk_email UNIQUE(email)
 );
 
 INSERT INTO customer(email, name, password, phone)
