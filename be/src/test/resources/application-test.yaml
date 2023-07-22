@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/gonggam-test
+    url: jdbc:mysql://localhost:3307/gonggam-test?useUnicode=true&character_set_server=utf8mb4
     username: "root"
     password: "test"
 

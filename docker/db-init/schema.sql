@@ -12,7 +12,7 @@ CREATE TABLE owner
 
 INSERT INTO owner (owner_no, phone, email)
 VALUES
-    ('1234568790', '01011112222', 'psy@naver.com'),
+    ('1234567890', '01011112222', 'psy@naver.com'),
     ('4567890123', '01014725836', 'psy2@naver.com');
 
 DROP TABLE IF EXISTS shared_space;
@@ -52,5 +52,5 @@ CREATE TABLE customer
 
 INSERT INTO customer(email, name, password, phone)
 VALUES
-    ('psy@naver.com', 'psy', '1234', '01054555555'),
-    ('psy2@naver.com', 'psy2', '5678', '01099998888');
+    ('psy@naver.com', 'psy', 'qwer1234시크릿키', '01054555555'),
+    ('psy2@naver.com', 'psy2', 'qwer1234시크릿키', '01099998888');
