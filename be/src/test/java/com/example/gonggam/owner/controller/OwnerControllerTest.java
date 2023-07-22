@@ -25,7 +25,7 @@ class OwnerControllerTest extends ControllerAnnotation {
     void 사업자_생성_테스트() throws Exception {
         // Given
         String phone = "01012345678";
-        String ownerNo = "1234567890";
+        String ownerNo = "1919191919";
         String email = "psy@naver.com";
 
         OwnerUpdateRequest ownerRequest = OwnerUpdateRequest.builder()

@@ -27,14 +27,10 @@ class OwnerRepositoryTest extends RepositoryAnnotation {
     @BeforeAll
     static void init() {
         // Given
-        String ownerNo = "1234567890";
-        String email = "parksey@naver.com";
-        String phone = "01012345678";
-
         owner = Owner.builder()
-                .ownerNo(ownerNo)
-                .email(email)
-                .phone(phone)
+                .ownerNo("159482637")
+                .email("parksey@naver.com")
+                .phone("01012345678")
                 .createAt(LocalDateTime.now())
                 .build();
     }

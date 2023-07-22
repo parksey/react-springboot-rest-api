@@ -8,7 +8,6 @@ public final class ValidationStatus {
         public static final String NOT_PHONE_PATTERN = "핸드폰 패턴이 맞지 않습니다.";
         public static final String NO_DATA = "값이 안들어 왔습니다.";
         public static final String NOT_BLANK = "빈 값이면 안됩니다.";
-        public static final String SECRET_KEY = "시크릿키";
 
         private Global() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
