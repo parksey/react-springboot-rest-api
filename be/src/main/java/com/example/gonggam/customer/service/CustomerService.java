@@ -39,4 +39,11 @@ public class CustomerService {
 
         return customerSecurity.isSamePassword(customer, loginRequest);
     }
+
+    public Customer loginTemp(LoginRequest loginRequest) {
+        Customer customer = customerRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new CustomerException(CustomValidationStatus.CHECK_AGAIN));
+
+        return customer;
+    }
 }

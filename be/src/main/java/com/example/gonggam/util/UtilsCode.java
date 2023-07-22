@@ -10,6 +10,7 @@ public class UtilsCode {
         public static final String PHONE_PATTERN = "\\d{10,11}";
         public static final String EMAIL_PATTERN = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}";
         public static final String TIME_ZONE = "Asia/Seoul";
+        public static final String SECRET_KEY = "시크릿키";
 
         private Global() {
             throw new UtilsException(CustomValidationStatus.UTIL_CLASS);
