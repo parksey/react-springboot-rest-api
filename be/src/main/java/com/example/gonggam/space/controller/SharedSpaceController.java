@@ -9,6 +9,7 @@ import com.example.gonggam.util.UtilsCode;
 import com.example.gonggam.util.exception.CustomValidationStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class SharedSpaceController {
     }
 
     @PostMapping
-    public ResponseEntity<SpaceInfoResponse> creatSpace(@RequestBody SpaceCreateRequest spaceCreateRequest, HttpServletRequest servletRequest) {
+    public ResponseEntity<SpaceInfoResponse> creatSpace(@RequestBody @Valid SpaceCreateRequest spaceCreateRequest, HttpServletRequest servletRequest) {
         HttpSession session = servletRequest.getSession(false);
         if (session == null) {
             throw new SharedSpaceException(CustomValidationStatus.LOGIN_ERROR);

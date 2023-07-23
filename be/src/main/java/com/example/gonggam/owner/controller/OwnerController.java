@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,13 @@ public class OwnerController {
     }
 
     @PostMapping
-    public ResponseEntity<OwnerResponse> createOwner(@RequestBody OwnerUpdateRequest ownerRequest) {
+    public ResponseEntity<OwnerResponse> createOwner(@RequestBody @Valid OwnerUpdateRequest ownerRequest) {
         OwnerResponse ownerResponse = ownerService.createOperator(ownerRequest);
         return new ResponseEntity<>(ownerResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteOwner(@RequestBody OwnerRemoveRequest ownerRequest) {
+    public ResponseEntity<Void> deleteOwner(@RequestBody @Valid OwnerRemoveRequest ownerRequest) {
         ownerService.deleteOwner(ownerRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

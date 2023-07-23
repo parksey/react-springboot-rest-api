@@ -1,7 +1,6 @@
 package com.example.gonggam.customer.controller;
 
 
-import com.example.gonggam.customer.domain.Customer;
 import com.example.gonggam.customer.dto.CustomerCreateRequest;
 import com.example.gonggam.customer.dto.LoginRequest;
 import com.example.gonggam.customer.service.CustomerService;
@@ -10,6 +9,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,13 +28,13 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerCreateRequest customerCreateRequest) {
+    public ResponseEntity<Void> createCustomer(@RequestBody @Valid CustomerCreateRequest customerCreateRequest) {
         customerService.register(customerCreateRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<Void> login(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
         boolean isLogin = customerService.login(loginRequest);
 
         if (isLogin) {
