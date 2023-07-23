@@ -30,14 +30,15 @@ public class SharedSpaceService {
     }
 
     @Transactional
-    public SpaceInfoResponse createSpace(SpaceCreateRequest spaceCreateRequest) {
-        boolean isExistsOwner = ownerRepository.existsById(spaceCreateRequest.getOwnerId());
+    public SpaceInfoResponse createSpace(SpaceCreateRequest spaceCreateRequest, Long ownerId) {
+        boolean isExistsOwner = ownerRepository.existsById(ownerId);
 
         if (!isExistsOwner) {
             throw new OwnerException(CustomValidationStatus.NO_OWNER);
         }
 
         SharedSpace sharedSpace = spaceMapper.toEntity(spaceCreateRequest);
+        sharedSpace.bindOwnerId(ownerId);
         SharedSpace savedSharedSpace = sharedSpaceRepository.save(sharedSpace);
         return spaceMapper.toResponse(savedSharedSpace);
     }
@@ -47,15 +48,16 @@ public class SharedSpaceService {
         return spaceMapper.toResponse(owners);
     }
 
-    public List<SpaceSummary> getSpaces(String ownerNo) {
-        List<SharedSpace> owners = sharedSpaceRepository.findAllByOwnerNo(ownerNo);
-        return spaceMapper.toResponse(owners);
-    }
-
     public SpaceInfoResponse spaceInfo(long spaceId) {
         SharedSpace space = sharedSpaceRepository.findById(spaceId)
                 .orElseThrow(() -> new SharedSpaceException(CustomValidationStatus.NO_SPACE));
 
         return spaceMapper.toResponse(space);
     }
+
+    public List<SpaceSummary> findMySpaces(String ownerNo) {
+        List<SharedSpace> owners = sharedSpaceRepository.findAllByOwnerNo(ownerNo);
+        return spaceMapper.toResponse(owners);
+    }
+
 }
