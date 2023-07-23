@@ -14,7 +14,6 @@ public class SpaceMapper {
     public SharedSpace toEntity(SpaceCreateRequest creationRequest) {
         return SharedSpace.builder()
                 .title(creationRequest.getTitle())
-                .ownerId(creationRequest.getOwnerId())
                 .description(creationRequest.getDescription())
                 .location(creationRequest.getLocation())
                 .amount(creationRequest.getAmount())

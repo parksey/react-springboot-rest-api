@@ -5,6 +5,7 @@ import com.example.gonggam.customer.domain.Customer;
 import com.example.gonggam.customer.dto.CustomerCreateRequest;
 import com.example.gonggam.customer.dto.LoginRequest;
 import com.example.gonggam.customer.service.CustomerService;
+import com.example.gonggam.util.UtilsCode;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +39,7 @@ public class CustomerController {
 
         if (isLogin) {
             HttpSession session = request.getSession();
-            session.setAttribute("email", loginRequest.getEmail());
+            session.setAttribute(UtilsCode.Global.EMAIL, loginRequest.getEmail());
 
             Cookie cookie = new Cookie("sessionId", session.getId());
             cookie.setHttpOnly(false);

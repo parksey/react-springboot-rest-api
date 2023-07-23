@@ -69,8 +69,8 @@ public class SpaceServiceTest {
     @Test
     void 장소_생성_성공_테스트() {
         // Given
+        long ownerId = sharedSpace.getOwnerId();
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
-                .ownerId(sharedSpace.getOwnerId())
                 .title(sharedSpace.getTitle())
                 .location(sharedSpace.getLocation())
                 .capacity(sharedSpace.getCapacity())
@@ -80,7 +80,6 @@ public class SpaceServiceTest {
                 .build();
 
         SharedSpace savedSharedSpace = SharedSpace.builder()
-                .ownerId(sharedSpace.getOwnerId())
                 .title(sharedSpace.getTitle())
                 .location(sharedSpace.getLocation())
                 .capacity(sharedSpace.getCapacity())
@@ -99,12 +98,12 @@ public class SpaceServiceTest {
                 .endAt(sharedSpace.getEndAt())
                 .build();
 
-        given(ownerRepository.existsById(spaceCreateRequest.getOwnerId())).willReturn(true);
+        given(ownerRepository.existsById(ownerId)).willReturn(true);
         given(spaceMapper.toEntity(spaceCreateRequest)).willReturn(sharedSpace);
         given(spaceRepository.save(sharedSpace)).willReturn(savedSharedSpace);
 
         // When
-        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest);
+        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest, ownerId);
 
         // Then
         assertThat(expectResponse).isNotNull();
@@ -117,7 +116,7 @@ public class SpaceServiceTest {
                 () -> assertThat(expectResponse.getEndAt()).isEqualTo(createResponse.getEndAt())
         );
 
-        verify(ownerRepository).existsById(spaceCreateRequest.getOwnerId());
+        verify(ownerRepository).existsById(ownerId);
         verify(spaceMapper).toEntity(spaceCreateRequest);
         verify(spaceRepository).save(sharedSpace);;
     }
@@ -125,8 +124,8 @@ public class SpaceServiceTest {
     @Test
     void 장소_생성_동일한_이메일로_등록하여_실패_테스트() {
         // Given
+        long ownerId = sharedSpace.getOwnerId();
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
-                .ownerId(sharedSpace.getOwnerId())
                 .title(sharedSpace.getTitle())
                 .location(sharedSpace.getLocation())
                 .capacity(sharedSpace.getCapacity())
@@ -135,10 +134,10 @@ public class SpaceServiceTest {
                 .amount(sharedSpace.getAmount())
                 .build();
 
-        given(ownerRepository.existsById(spaceCreateRequest.getOwnerId())).willReturn(false);
+        given(ownerRepository.existsById(ownerId)).willReturn(false);
 
         // When + Then
-        assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest))
+        assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest, ownerId))
                 .isInstanceOf(OwnerException.class)
                 .hasMessage(CustomValidationStatus.NO_OWNER.getMessage());
     }

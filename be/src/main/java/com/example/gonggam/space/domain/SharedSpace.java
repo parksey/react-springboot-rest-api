@@ -87,6 +87,10 @@ public class SharedSpace {
     protected SharedSpace() {
     }
 
+    public void bindOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
     private Integer validateAndGetDefaultCapacity(Integer capacity) {
         if (capacity == null) {
             return UtilsCode.Space.MIN_SPACE_CAPACITY;

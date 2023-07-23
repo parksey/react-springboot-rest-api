@@ -13,9 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 public class SpaceCreateRequest {
 
-    @NotNull(message = ValidationStatus.Global.NO_DATA)
-    private final Long ownerId;
-
     @NotBlank(message = ValidationStatus.Global.NOT_BLANK)
     private final String title;
 
@@ -37,15 +34,13 @@ public class SpaceCreateRequest {
     private final LocalDateTime endAt;
 
     @Builder
-    public SpaceCreateRequest(final long ownerId,
-                              final String title,
+    public SpaceCreateRequest(final String title,
                               final String location,
                               final String description,
                               final int capacity,
                               final long amount,
                               final LocalDateTime startAt,
                               final LocalDateTime endAt) {
-        this.ownerId = ownerId;
         this.title = title;
         this.location = location;
         this.description = description;
