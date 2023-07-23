@@ -2,6 +2,10 @@ package com.example.gonggam.space.controller;
 
 import com.example.gonggam.global.testconfig.ControllerAnnotation;
 import com.example.gonggam.space.dto.SpaceCreateRequest;
+import com.example.gonggam.util.UtilsCode;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -25,6 +29,7 @@ class SharedSpaceControllerTest extends ControllerAnnotation {
     @Test
     void 공유공간_생성_테스트() throws Exception {
         // Given
+
         long ownerId = 1L;
         String title = "타이틀";
         String location = "위치";
@@ -32,6 +37,7 @@ class SharedSpaceControllerTest extends ControllerAnnotation {
         long amont = 29000L;
         LocalDateTime startAt = LocalDateTime.now();
         LocalDateTime endAt = LocalDateTime.now().plusDays(2);
+        String ownerNo = "1234567890";
 
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
                 .title(title)
@@ -46,7 +52,8 @@ class SharedSpaceControllerTest extends ControllerAnnotation {
         ResultActions spaceResult = mockMvc.perform(
                 post(getUrl("/spaces"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(spaceCreateRequest)));
+                        .content(objectMapper.writeValueAsString(spaceCreateRequest))
+                        .sessionAttr(UtilsCode.Global.OWNER_NO, ownerNo));
 
         // Then
         spaceResult.andDo(print())

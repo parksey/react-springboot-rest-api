@@ -1,5 +1,6 @@
 package com.example.gonggam.space;
 
+import com.example.gonggam.owner.domain.Owner;
 import com.example.gonggam.owner.exception.OwnerException;
 import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.space.domain.SharedSpace;
@@ -17,8 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -66,6 +69,7 @@ public class SpaceServiceTest {
     }
 
 
+    @Transactional
     @Test
     void 장소_생성_성공_테스트() {
         // Given
@@ -99,12 +103,12 @@ public class SpaceServiceTest {
                 .endAt(sharedSpace.getEndAt())
                 .build();
 
-        given(ownerRepository.findByOwnerNo(ownerNo)).willReturn(any());
+        given(ownerRepository.findByOwnerNo(ownerNo)).willReturn(Optional.of(Owner.builder().build()));
         given(spaceMapper.toEntity(spaceCreateRequest)).willReturn(sharedSpace);
         given(spaceRepository.save(sharedSpace)).willReturn(savedSharedSpace);
 
         // When
-        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest, ownerNo);
+        SpaceInfoResponse createResponse = spaceService.createSpace(spaceCreateRequest, ownerNo);
 
         // Then
         assertThat(expectResponse).isNotNull();
@@ -117,16 +121,15 @@ public class SpaceServiceTest {
                 () -> assertThat(expectResponse.getEndAt()).isEqualTo(createResponse.getEndAt())
         );
 
-        verify(ownerRepository).existsById(ownerId);
+        verify(ownerRepository).findByOwnerNo(ownerNo);
         verify(spaceMapper).toEntity(spaceCreateRequest);
         verify(spaceRepository).save(sharedSpace);;
     }
 
     @Test
-    void 장소_생성_동일한_이메일로_등록하여_실패_테스트() {
+    void 등록되지_않은_사업자명으로_등록시_장소_생성_실패_테스트() {
         // Given
-        String ownerNo = "1234567890";
-        long ownerId = sharedSpace.getOwnerId();
+        String ownerNo = "test";
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
                 .title(sharedSpace.getTitle())
                 .location(sharedSpace.getLocation())
@@ -135,8 +138,6 @@ public class SpaceServiceTest {
                 .endAt(sharedSpace.getEndAt())
                 .amount(sharedSpace.getAmount())
                 .build();
-
-        given(ownerRepository.existsById(ownerId)).willReturn(false);
 
         // When + Then
         assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest, ownerNo))

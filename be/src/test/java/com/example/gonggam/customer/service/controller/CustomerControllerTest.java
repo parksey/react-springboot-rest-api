@@ -38,7 +38,7 @@ public class CustomerControllerTest extends ControllerAnnotation {
 
         // When
         ResultActions resultActions = mockMvc.perform(
-                post(getUrl("/user/register"))
+                post(getUrl("/users/register"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerCreateRequest)));
 
@@ -59,13 +59,13 @@ public class CustomerControllerTest extends ControllerAnnotation {
 
         // When
         ResultActions resultActions = mockMvc.perform(
-                post(getUrl("/user/login"))
+                post(getUrl("/users/login"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest)));
 
         // Then
         resultActions.andDo(print())
                 .andExpect(status().is2xxSuccessful())
-                .andExpect(cookie().exists("JSESSIONID"));
+                .andExpect(cookie().exists("sessionId"));
     }
 }
