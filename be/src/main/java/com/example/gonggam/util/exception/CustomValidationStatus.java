@@ -10,7 +10,10 @@ public enum CustomValidationStatus {
     NO_SHAED_SPACE("해당 사업자는 어떠한 공유 공간도 입력하시지 않았습니다."),
     EXIST_USER("해당 이메일은 이미 사용중 입니다."),
     CHECK_AGAIN("아이디나 비밀먼호를 확인해 주세요"),
-    NO_SPACE("해당 공간이 없습니다.");
+    NO_SPACE("해당 공간이 없습니다."),
+    LOGIN_ERROR("로그인 에러 입니다."),
+    NO_USER("회원가입되어 있지 않는 유저 입니다."),
+    ALREADY_RESERVED("이미 예약했습니다.");
 
     public final String message;
 
