@@ -57,5 +57,4 @@ public class SharedSpaceService {
         List<SharedSpace> owners = sharedSpaceRepository.findAllByOwnerNo(ownerNo);
         return spaceMapper.toResponse(owners);
     }
-
 }

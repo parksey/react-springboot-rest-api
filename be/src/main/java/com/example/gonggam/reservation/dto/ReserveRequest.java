@@ -14,6 +14,6 @@ public class ReserveRequest {
        this.spaceId = spaceId;
    }
 
-   private ReserveRequest() {
+   protected ReserveRequest() {
    }
 }

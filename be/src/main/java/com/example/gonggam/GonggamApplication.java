@@ -9,5 +9,4 @@ public class GonggamApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GonggamApplication.class, args);
 	}
-
 }

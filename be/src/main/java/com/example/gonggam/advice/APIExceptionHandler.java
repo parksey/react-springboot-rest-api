@@ -20,7 +20,7 @@ public class APIExceptionHandler {
             ReservationException.class,
             SharedSpaceException.class,
             SessionException.class})
-    public ResponseEntity<ErrorResponse> handleVoucherException(CustomException exception) {
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException exception) {
         return handleExceptionInternal(exception.getValidationStatus());
     }
 
