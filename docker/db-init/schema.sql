@@ -54,3 +54,16 @@ INSERT INTO customer(email, name, password, phone)
 VALUES
     ('psy@naver.com', 'psy', 'qwer1234시크릿키', '01054555555'),
     ('psy2@naver.com', 'psy2', 'qwer1234시크릿키', '01099998888');
+
+
+DROP TABLE IF EXISTS reservation;
+CREATE TABLE reservation
+(
+    reservation_id      BIGINT   AUTO_INCREMENT,
+    space_id            BIGINT   NOT NULL,
+    customer_id         BIGINT   NOT NULL,
+    reservation_status  ENUM('YET', 'BOOK', 'SUCCESS') DEFAULT 'YET',
+    create_at   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (reservation_id),
+    FOREIGN KEY (space_id) REFERENCES shared_space(space_id)
+);
