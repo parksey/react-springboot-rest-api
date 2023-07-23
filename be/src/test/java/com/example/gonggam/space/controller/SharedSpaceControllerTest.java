@@ -34,7 +34,6 @@ class SharedSpaceControllerTest extends ControllerAnnotation {
         LocalDateTime endAt = LocalDateTime.now().plusDays(2);
 
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
-                .ownerId(ownerId)
                 .title(title)
                 .location(location)
                 .capacity(capacity)

@@ -1,5 +1,6 @@
 package com.example.gonggam.space.service;
 
+import com.example.gonggam.owner.domain.Owner;
 import com.example.gonggam.owner.exception.OwnerException;
 import com.example.gonggam.owner.repository.OwnerRepository;
 import com.example.gonggam.space.domain.SharedSpace;
@@ -30,15 +31,12 @@ public class SharedSpaceService {
     }
 
     @Transactional
-    public SpaceInfoResponse createSpace(SpaceCreateRequest spaceCreateRequest, Long ownerId) {
-        boolean isExistsOwner = ownerRepository.existsById(ownerId);
-
-        if (!isExistsOwner) {
-            throw new OwnerException(CustomValidationStatus.NO_OWNER);
-        }
+    public SpaceInfoResponse createSpace(SpaceCreateRequest spaceCreateRequest, String ownerNo) {
+        Owner owner = ownerRepository.findByOwnerNo(ownerNo)
+                .orElseThrow(() -> new OwnerException(CustomValidationStatus.NO_OWNER));
 
         SharedSpace sharedSpace = spaceMapper.toEntity(spaceCreateRequest);
-        sharedSpace.bindOwnerId(ownerId);
+        sharedSpace.bindOwnerId(owner.getOwnerId());
         SharedSpace savedSharedSpace = sharedSpaceRepository.save(sharedSpace);
         return spaceMapper.toResponse(savedSharedSpace);
     }

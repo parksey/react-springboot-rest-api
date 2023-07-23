@@ -43,7 +43,6 @@ class SpaceRequestTest {
         // When
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
                 .capacity(capacity)
-                .ownerId(ownerId)
                 .location(location)
                 .title(title)
                 .amount(amount)
@@ -53,7 +52,6 @@ class SpaceRequestTest {
 
         // Then
         assertAll(
-                () -> assertThat(spaceCreateRequest.getOwnerId()).isEqualTo(ownerId),
                 () -> assertThat(spaceCreateRequest.getTitle()).isEqualTo(title),
                 () -> assertThat(spaceCreateRequest.getCapacity()).isEqualTo(capacity),
                 () -> assertThat(spaceCreateRequest.getLocation()).isEqualTo(location),

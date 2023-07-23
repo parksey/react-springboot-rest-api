@@ -69,6 +69,7 @@ public class SpaceServiceTest {
     @Test
     void 장소_생성_성공_테스트() {
         // Given
+        String ownerNo = "123456798";
         long ownerId = sharedSpace.getOwnerId();
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
                 .title(sharedSpace.getTitle())
@@ -98,12 +99,12 @@ public class SpaceServiceTest {
                 .endAt(sharedSpace.getEndAt())
                 .build();
 
-        given(ownerRepository.existsById(ownerId)).willReturn(true);
+        given(ownerRepository.findByOwnerNo(ownerNo)).willReturn(any());
         given(spaceMapper.toEntity(spaceCreateRequest)).willReturn(sharedSpace);
         given(spaceRepository.save(sharedSpace)).willReturn(savedSharedSpace);
 
         // When
-        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest, ownerId);
+        SpaceInfoResponse createResponse =  spaceService.createSpace(spaceCreateRequest, ownerNo);
 
         // Then
         assertThat(expectResponse).isNotNull();
@@ -124,6 +125,7 @@ public class SpaceServiceTest {
     @Test
     void 장소_생성_동일한_이메일로_등록하여_실패_테스트() {
         // Given
+        String ownerNo = "1234567890";
         long ownerId = sharedSpace.getOwnerId();
         SpaceCreateRequest spaceCreateRequest = SpaceCreateRequest.builder()
                 .title(sharedSpace.getTitle())
@@ -137,7 +139,7 @@ public class SpaceServiceTest {
         given(ownerRepository.existsById(ownerId)).willReturn(false);
 
         // When + Then
-        assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest, ownerId))
+        assertThatThrownBy(()->spaceService.createSpace(spaceCreateRequest, ownerNo))
                 .isInstanceOf(OwnerException.class)
                 .hasMessage(CustomValidationStatus.NO_OWNER.getMessage());
     }
