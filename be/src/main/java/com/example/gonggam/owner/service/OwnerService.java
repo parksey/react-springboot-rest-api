@@ -1,6 +1,7 @@
 package com.example.gonggam.owner.service;
 
 import com.example.gonggam.owner.domain.Owner;
+import com.example.gonggam.owner.dto.OwnerLoginRequest;
 import com.example.gonggam.owner.dto.OwnerRemoveRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
 import com.example.gonggam.owner.dto.OwnerUpdateRequest;
@@ -67,5 +68,9 @@ public class OwnerService {
         }
 
         ownerRepository.delete(existsOwner);
+    }
+
+    public boolean login(OwnerLoginRequest loginRequest) {
+        return ownerRepository.existsByOwnerNo(loginRequest.getOwnerNo());
     }
 }

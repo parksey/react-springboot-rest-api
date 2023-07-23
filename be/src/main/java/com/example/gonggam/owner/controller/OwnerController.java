@@ -1,9 +1,15 @@
 package com.example.gonggam.owner.controller;
 
+import com.example.gonggam.owner.dto.OwnerLoginRequest;
 import com.example.gonggam.owner.dto.OwnerRemoveRequest;
 import com.example.gonggam.owner.dto.OwnerResponse;
 import com.example.gonggam.owner.dto.OwnerUpdateRequest;
 import com.example.gonggam.owner.service.OwnerService;
+import com.example.gonggam.util.UtilsCode;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +24,7 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/owner/{ownerNo}")
+    @GetMapping("/owners/{ownerNo}")
     public ResponseEntity<OwnerResponse> findOwnerInfo(@PathVariable String ownerNo) {
         OwnerResponse ownerResponse = ownerService.findOwnerInfo(ownerNo);
         return new ResponseEntity<>(ownerResponse, HttpStatus.OK);
@@ -34,5 +40,21 @@ public class OwnerController {
     public ResponseEntity<Void> deleteOwner(@RequestBody OwnerRemoveRequest ownerRequest) {
         ownerService.deleteOwner(ownerRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/owners/login")
+    public ResponseEntity<Void> login(@RequestBody OwnerLoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
+        boolean isLogin = ownerService.login(loginRequest);
+
+        if (isLogin) {
+            HttpSession session = request.getSession();
+            session.setAttribute(UtilsCode.Global.OWNER_NO, loginRequest.getOwnerNo());
+
+            Cookie cookie = new Cookie("sessionId", session.getId());
+            cookie.setHttpOnly(false);
+            response.addCookie(cookie);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 }

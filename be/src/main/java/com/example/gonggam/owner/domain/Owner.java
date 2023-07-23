@@ -27,7 +27,7 @@ public class Owner {
     @NotNull
     private String phone;
 
-    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN,message = ValidationStatus.Global.NOT_EMAIL)
+    @Email(regexp = UtilsCode.Global.EMAIL_PATTERN, message = ValidationStatus.Global.NOT_EMAIL)
     @NotNull
     @Column(unique = true)
     private String email;
@@ -35,7 +35,11 @@ public class Owner {
     @NotNull(message = ValidationStatus.Global.NO_DATA)
     private LocalDateTime createAt;
 
-    private Owner(Long ownerId, String ownerNo, String phone, String email, LocalDateTime createAt) {
+    private Owner(final Long ownerId,
+                  final String ownerNo,
+                  final String phone,
+                  final String email,
+                  final LocalDateTime createAt) {
         this.ownerId = ownerId;
         this.ownerNo = ownerNo;
         this.phone = phone;
@@ -44,7 +48,7 @@ public class Owner {
     }
 
     @Builder
-    public Owner(final String ownerNo, final String phone, final String email, final LocalDateTime createAt) {
+    public Owner(String ownerNo, String phone, String email, LocalDateTime createAt) {
         this(null, ownerNo, phone, email, createAt);
     }
 
