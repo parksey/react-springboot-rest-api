@@ -1,0 +1,29 @@
+.Login-body {
+  display: flex;
+  align-items: center;
+  padding-top: 60px;
+  padding-bottom: 20px;
+  background-color: #fff;
+  width: 30%;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 80%;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .font-weight-normal {
+  text-align: center;
+}
+.form-signin {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}

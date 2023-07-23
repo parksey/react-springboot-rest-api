@@ -1,0 +1,57 @@
+@import url(./Index.css);
+.main-body {
+  padding-bottom: 5%;
+  height: 50rem;
+  display: flex;
+  justify-content: space-between;
+}
+.main-body .description {
+  width: 40%;
+  margin-left: 10%;
+  color: var(--main-black);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.main-body .description p:last-of-type {
+  font-weight: 900;
+}
+
+.main-body .project {
+  display: flex;
+  align-items: center;
+  margin-top: 13rem;
+}
+
+.main-body .description .project .indexbtn {
+  width: 10rem;
+  height: 5rem;
+  margin-right: 2rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-radius: 15px;
+  border: 2px solid var(--main-color);
+  color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.main-body .description .project .indexbtn:hover {
+  background: var(--main-color);
+  color: #fff;
+}
+
+.main-body .icon {
+  width: 46rem;
+  height: 44rem;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.temp {
+  margin-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
