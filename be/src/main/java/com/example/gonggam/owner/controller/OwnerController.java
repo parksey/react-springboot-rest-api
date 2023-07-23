@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/owners")
 public class OwnerController {
 
     private final OwnerService ownerService;
@@ -24,29 +24,29 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @GetMapping("/owners/{ownerNo}")
+    @GetMapping("/{ownerNo}")
     public ResponseEntity<OwnerResponse> findOwnerInfo(@PathVariable String ownerNo) {
         OwnerResponse ownerResponse = ownerService.findOwnerInfo(ownerNo);
         return new ResponseEntity<>(ownerResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/owners")
+    @PostMapping
     public ResponseEntity<OwnerResponse> createOwner(@RequestBody OwnerUpdateRequest ownerRequest) {
         OwnerResponse ownerResponse = ownerService.createOperator(ownerRequest);
         return new ResponseEntity<>(ownerResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/owners")
+    @DeleteMapping
     public ResponseEntity<Void> deleteOwner(@RequestBody OwnerRemoveRequest ownerRequest) {
         ownerService.deleteOwner(ownerRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/owners/login")
+    @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody OwnerLoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {
-        boolean isLogin = ownerService.login(loginRequest);
+        boolean canLogin = ownerService.login(loginRequest);
 
-        if (isLogin) {
+        if (canLogin) {
             HttpSession session = request.getSession();
             session.setAttribute(UtilsCode.Global.OWNER_NO, loginRequest.getOwnerNo());
 
@@ -55,6 +55,6 @@ public class OwnerController {
             response.addCookie(cookie);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

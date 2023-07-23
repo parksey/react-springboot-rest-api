@@ -19,7 +19,7 @@ public class SpaceCreateRequest {
     @NotBlank(message = ValidationStatus.Global.NOT_BLANK)
     private final String location;
 
-    private String description;
+    private final String description;
 
     @Min(value = UtilsCode.Space.MIN_SPACE_CAPACITY, message = ValidationStatus.Space.UNDER_MIN_CAPACIRY)
     private final int capacity;

@@ -222,7 +222,7 @@ class OwnerServiceTest {
             // When + Then
             assertThatThrownBy(()->ownerService.deleteOwner(ownerRemoveRequest))
                     .isInstanceOf(OwnerException.class)
-                    .hasMessage(CustomValidationStatus.NO_SHAED_SPACE.getMessage());
+                    .hasMessage(CustomValidationStatus.NO_SHARED_SPACE.getMessage());
         }
     }
 }

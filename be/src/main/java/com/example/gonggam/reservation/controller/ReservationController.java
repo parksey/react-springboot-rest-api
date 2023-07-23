@@ -37,7 +37,7 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/regist/myregist")
+    @GetMapping("/myReservations")
     public ResponseEntity<List<ReservesResponse>> myRegist(HttpServletRequest servletRequest) {
         HttpSession session = servletRequest.getSession(false);
         if (session == null) {

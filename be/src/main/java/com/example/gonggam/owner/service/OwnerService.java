@@ -64,7 +64,7 @@ public class OwnerService {
 
         if (!sharedSpaces.isEmpty()) {
             // 예약 있는지 추가 확인 필요
-            throw new OwnerException(CustomValidationStatus.NO_SHAED_SPACE);
+            throw new OwnerException(CustomValidationStatus.NO_SHARED_SPACE);
         }
 
         ownerRepository.delete(existsOwner);

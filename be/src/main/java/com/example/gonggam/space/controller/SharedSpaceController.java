@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/spaces")
 public class SharedSpaceController {
 
     private final SharedSpaceService sharedSpaceService;
@@ -25,31 +25,31 @@ public class SharedSpaceController {
         this.sharedSpaceService = sharedSpaceService;
     }
 
-    @PostMapping("/spaces")
+    @PostMapping
     public ResponseEntity<SpaceInfoResponse> creatSpace(@RequestBody SpaceCreateRequest spaceCreateRequest, HttpServletRequest servletRequest) {
         HttpSession session = servletRequest.getSession(false);
         if (session == null) {
             throw new SharedSpaceException(CustomValidationStatus.LOGIN_ERROR);
         }
 
-        Long ownerId = Long.parseLong((String) session.getAttribute(UtilsCode.Global.EMAIL));
-        SpaceInfoResponse infoResponse = sharedSpaceService.createSpace(spaceCreateRequest, ownerId);
+        String ownerNo = (String) session.getAttribute(UtilsCode.Global.OWNER_NO);
+        SpaceInfoResponse infoResponse = sharedSpaceService.createSpace(spaceCreateRequest, ownerNo);
         return new ResponseEntity<>(infoResponse, HttpStatus.CREATED);
     }
 
-    @GetMapping("/spaces")
+    @GetMapping
     public ResponseEntity<List<SpaceSummary>> spacesAll() {
         List<SpaceSummary> spacesResponse = sharedSpaceService.getSpacesAll();
         return new ResponseEntity<>(spacesResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/spaces/{spaceId}")
+    @GetMapping("/{spaceId}")
     public ResponseEntity<SpaceInfoResponse> spaceInfo(@PathVariable long spaceId) {
         SpaceInfoResponse infoResponse = sharedSpaceService.spaceInfo(spaceId);
         return new ResponseEntity<>(infoResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/spaces/mySpace")
+    @GetMapping("/mySpace")
     public ResponseEntity<List<SpaceSummary>> mySpaces(HttpServletRequest servletRequest) {
         HttpSession session = servletRequest.getSession(false);
         if (session == null) {
